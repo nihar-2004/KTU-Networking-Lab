@@ -1,0 +1,139 @@
+mec@user:~$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: enp2s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 1c:69:7a:44:1f:82 brd ff:ff:ff:ff:ff:ff
+3: wlp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether d0:37:45:0a:c9:4a brd ff:ff:ff:ff:ff:ff
+    inet 192.168.5.161/20 brd 192.168.15.255 scope global dynamic noprefixroute wlp1s0
+       valid_lft 17223sec preferred_lft 17223sec
+    inet6 fe80::e4:140a:a817:1336/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+
+
+
+traceroute to excelmec.org (104.21.7.63), 30 hops max, 60 byte packets
+ 1  14.139.184.209 (14.139.184.209)  2.539 ms  2.440 ms  2.762 ms
+ 2  * * *
+ 3  * * *
+ 4  10.255.221.33 (10.255.221.33)  39.955 ms 10.255.222.33 (10.255.222.33)  39.866 ms  39.737 ms
+ 5  115.247.100.29 (115.247.100.29)  46.968 ms  46.887 ms  46.772 ms
+ 6  * * *
+ 7  * * *
+ 8  * * *
+ 9  * * *
+10  162.158.84.145 (162.158.84.145)  157.202 ms 162.158.84.111 (162.158.84.111)  158.796 ms *
+11  162.158.84.173 (162.158.84.173)  157.007 ms 104.21.7.63 (104.21.7.63)  161.822 ms *
+
+
+
+mec@user:~$ ping -c 3 mec.ac.in
+PING mec.ac.in (192.168.15.250) 56(84) bytes of data.
+64 bytes from 192.168.15.250 (192.168.15.250): icmp_seq=1 ttl=64 time=17.6 ms
+64 bytes from 192.168.15.250 (192.168.15.250): icmp_seq=2 ttl=64 time=64.6 ms
+64 bytes from 192.168.15.250 (192.168.15.250): icmp_seq=3 ttl=64 time=13.2 ms
+
+--- mec.ac.in ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 13.169/31.809/64.641/23.286 ms
+
+
+
+mec@user:~$ netstat
+Active Internet connections (w/o servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State      
+tcp        0      0 user:34246              93.243.107.34.bc.:https ESTABLISHED
+tcp        0      0 user:58454              maa05s21-in-f3.1e:https ESTABLISHED
+tcp        0      0 user:55008              123.208.120.34.bc:https ESTABLISHED
+...
+Active UNIX domain sockets (w/o servers)
+Proto RefCnt Flags       Type       State         I-Node   Path
+unix  2      [ ]         DGRAM                    36053    /run/user/1001/systemd/notify
+unix  3      [ ]         DGRAM      CONNECTED     16971    /run/systemd/notify
+unix  2      [ ]         DGRAM                    16985    /run/systemd/journal/syslog
+...
+
+
+
+mec@user:~$ hostname
+user
+
+
+
+mec@user:~$ ifconfig
+enp2s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        ether 1c:69:7a:44:1f:82  txqueuelen 1000  (Ethernet)
+        RX packets 104691  bytes 18059544 (18.0 MB)
+        RX errors 0  dropped 15398  overruns 0  frame 0
+        TX packets 293  bytes 56342 (56.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 18327  bytes 1359204 (1.3 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 18327  bytes 1359204 (1.3 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+wlp1s0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.5.161  netmask 255.255.240.0  broadcast 192.168.15.255
+        inet6 fe80::e4:140a:a817:1336  prefixlen 64  scopeid 0x20<link>
+        ether d0:37:45:0a:c9:4a  txqueuelen 1000  (Ethernet)
+        RX packets 180357  bytes 70280521 (70.2 MB)
+        RX errors 0  dropped 8620  overruns 0  frame 0
+        TX packets 43290  bytes 15001146 (15.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+mec@user:~$ arp
+Address                  HWtype  HWaddress           Flags Mask            Iface
+192.168.0.65                     (incomplete)                              wlp1s0
+oracle.mec.ac.in         ether   00:90:27:e6:36:c8   C                     wlp1s0
+192.168.15.250           ether   20:04:0f:e5:60:08   C                     wlp1s0
+192.168.0.4              ether   f4:4d:30:1e:c8:d3   C                     wlp1s0
+192.168.7.187            ether   50:46:5d:52:bd:78   C                     wlp1s0
+
+
+
+mec@user:~$ whois mec.ac.in
+Domain Name: mec.ac.in
+Registry Domain ID: D8347-IN
+Registrar WHOIS Server:
+Registrar URL: http://www.ernet.in
+Updated Date: 2019-12-08T05:01:14Z
+Creation Date: 2003-12-31T05:00:00Z
+Registry Expiry Date: 2028-12-31T05:00:00Z
+Registrar: ERNET India
+Registrar IANA ID: 800068
+Registrar Abuse Contact Email:
+Registrar Abuse Contact Phone:
+Domain Status: ok http://www.icann.org/epp#OK
+
+
+
+mec@user:~$ nslookup google.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	google.com
+Address: 142.250.193.174
+Name:	google.com
+Address: 2404:6800:4007:821::200e
+
+
+
+mec@user:~$ finger
+Login     Name       Tty      Idle  Login Time   Office     Office Phone
+mec                 *:0             Dec 19 09:37 (:0)
+
+
+
+
